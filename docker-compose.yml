@@ -4,14 +4,19 @@ services:
       context: .
       dockerfile: apps/backend/Dockerfile
     ports:
-      - "3001:3001" 
+      - "3001:3001"
     volumes:
       - ./apps/backend:/app/apps/backend
       - ./packages/shared:/app/packages/shared
       - /app/apps/backend/node_modules
       - /app/apps/backend/dist
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=${NODE_ENV:-development}
+      - PORT=3001
+      - CORS_ORIGIN=http://localhost:3000
+      - API_PREFIX=api
+    networks:
+      - app-network
 
   frontend:
     build:
@@ -24,5 +29,14 @@ services:
       - ./packages/shared:/app/packages/shared
       - /app/apps/frontend/node_modules
       - /app/apps/frontend/.next
+    environment:
+      - NODE_ENV=${NODE_ENV:-development}
+      - NEXT_PUBLIC_API_URL=http://backend:3001
     depends_on:
       - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
