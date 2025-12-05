@@ -3,6 +3,7 @@ WORKDIR /app
 
 # Copy dependency definitions
 COPY ./package.json ./bun.lock ./
+COPY ./tsconfig.base.json ./
 COPY ./apps/frontend/package.json ./apps/frontend/
 COPY ./apps/backend/package.json ./apps/backend/
 # COPY ./packages/shared/package.json ./packages/shared/
