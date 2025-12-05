@@ -3,7 +3,7 @@ WORKDIR /app
 
 # Copy root and package files
 COPY ./package.json ./bun.lock ./
-COPY ./tsconfig.base.json ./
+COPY ./tsconfig.json ./
 COPY ./apps/backend/package.json ./apps/backend/
 COPY ./apps/frontend/package.json ./apps/frontend/
 # COPY ./packages/shared/package.json ./packages/shared/ (Uncomment if you use shared)
