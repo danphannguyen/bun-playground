@@ -17,10 +17,17 @@ COPY ./apps/frontend ./apps/frontend
 
 # Build Next.js
 WORKDIR /app/apps/frontend
-# This creates the .next folder
+ENV NEXT_TELEMETRY_DISABLED=1
 RUN bun run build
 
+# Cleanup: Remove dev dependencies and source files to reduce image size
+RUN cd /app && bun install --production --frozen-lockfile && \
+    rm -rf /app/apps/frontend/app && \
+    rm -rf /app/apps/frontend/*.ts && \
+    rm -rf /app/apps/frontend/*.tsx && \
+    rm -rf /app/node_modules/.cache
+
 # Run Next.js
-# Next.js defaults to port 3000
+ENV NODE_ENV=production
 EXPOSE 3000
 CMD ["bun", "run", "start"]
