@@ -17,7 +17,12 @@ services:
       - API_PREFIX=api
     networks:
       - app-network
-
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 256M
   frontend:
     build:
       context: .
@@ -32,6 +37,12 @@ services:
     environment:
       - NODE_ENV=${NODE_ENV:-development}
       - NEXT_PUBLIC_API_URL=http://backend:3001
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 512M
     depends_on:
       - backend
     networks:
