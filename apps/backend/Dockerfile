@@ -1,5 +1,6 @@
+# syntax=docker/dockerfile:1
 # Stage 1: Dependencies
-FROM oven/bun:1 AS deps
+FROM --platform=$BUILDPLATFORM oven/bun:1 AS deps
 WORKDIR /app
 
 # Copy root and package files
@@ -13,7 +14,7 @@ COPY ./apps/frontend/package.json ./apps/frontend/
 RUN bun install --frozen-lockfile
 
 # Stage 2: Builder
-FROM oven/bun:1 AS builder
+FROM --platform=$BUILDPLATFORM oven/bun:1 AS builder
 WORKDIR /app
 
 # Copy dependencies from deps stage
@@ -30,7 +31,7 @@ WORKDIR /app/apps/backend
 RUN bun run build
 
 # Stage 3: Production Runner
-FROM oven/bun:1 AS runner
+FROM --platform=$BUILDPLATFORM oven/bun:1 AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production

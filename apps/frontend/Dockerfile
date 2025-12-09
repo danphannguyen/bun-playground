@@ -1,4 +1,5 @@
-FROM oven/bun:1 as base
+# syntax=docker/dockerfile:1
+FROM --platform=$BUILDPLATFORM oven/bun:1 as base
 WORKDIR /app
 
 # Copy dependency definitions
@@ -20,12 +21,11 @@ WORKDIR /app/apps/frontend
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN bun run build
 
-# Cleanup: Remove dev dependencies and source files to reduce image size
+# Cleanup: Remove dev dependencies and cache to reduce image size
+# Ne pas supprimer les fichiers source car Next.js peut en avoir besoin en runtime
 RUN cd /app && bun install --production --frozen-lockfile && \
-    rm -rf /app/apps/frontend/app && \
-    rm -rf /app/apps/frontend/*.ts && \
-    rm -rf /app/apps/frontend/*.tsx && \
-    rm -rf /app/node_modules/.cache
+    rm -rf /app/node_modules/.cache && \
+    rm -rf /app/apps/frontend/.next/cache
 
 # Run Next.js
 ENV NODE_ENV=production
