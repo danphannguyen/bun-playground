@@ -1,10 +1,29 @@
 {
   "name": "bun-playground",
-  "module": "index.ts",
   "type": "module",
   "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "bun run --filter '*' dev",
+    "dev:backend": "bun run --filter backend dev",
+    "dev:frontend": "bun run --filter frontend dev",
+    "build": "bun run --filter '*' build",
+    "build:backend": "bun run --filter backend build",
+    "build:frontend": "bun run --filter frontend build",
+    "start": "bun run --filter '*' start",
+    "start:backend": "bun run --filter backend start:prod",
+    "start:frontend": "bun run --filter frontend start",
+    "lint": "bun run --filter '*' lint",
+    "test": "bun run --filter '*' test",
+    "clean": "rimraf apps/backend/dist apps/frontend/.next apps/backend/node_modules apps/frontend/node_modules packages/shared/node_modules node_modules",
+    "clean:build": "rimraf apps/backend/dist apps/frontend/.next",
+    "clean:deps": "rimraf apps/backend/node_modules apps/frontend/node_modules packages/shared/node_modules node_modules"
+  },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "rimraf": "^6.1.2"
   },
   "peerDependencies": {
     "typescript": "^5"

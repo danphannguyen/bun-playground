@@ -1,0 +1,54 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: apps/backend/Dockerfile
+    ports:
+      - "${BACKEND_PORT}:${BACKEND_PORT}"
+    volumes:
+      - ./apps/backend:/app/apps/backend:rw
+      - /app/apps/backend/node_modules
+      - /app/apps/backend/dist
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - PORT=${BACKEND_PORT}
+      - CORS_ORIGIN=${BACKEND_CORS_ORIGIN}
+      - API_PREFIX=${BACKEND_API_PREFIX}
+    networks:
+      - app-network
+    deploy:
+      resources:
+        limits:
+          memory: ${BACKEND_MEMORY_LIMIT}
+        reservations:
+          memory: ${BACKEND_MEMORY_RESERVATION}
+  frontend:
+    build:
+      context: .
+      dockerfile: apps/frontend/Dockerfile
+      platforms:
+        - linux/amd64
+        - linux/arm64
+    ports:
+      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
+    volumes:
+      - ./apps/frontend:/app/apps/frontend:rw
+      - /app/apps/frontend/node_modules
+      - /app/apps/frontend/.next
+    environment:
+      # NODE_ENV is automatically managed by Next.js (production/development)
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+    deploy:
+      resources:
+        limits:
+          memory: ${FRONTEND_MEMORY_LIMIT}
+        reservations:
+          memory: ${FRONTEND_MEMORY_RESERVATION}
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
