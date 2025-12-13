@@ -9,7 +9,7 @@ COPY ./apps/frontend/package.json ./apps/frontend/
 COPY ./apps/backend/package.json ./apps/backend/
 
 # Install all dependencies
-RUN bun install --frozen-lockfile
+RUN bun install
 
 # Copy source
 COPY ./apps/frontend ./apps/frontend
@@ -20,8 +20,8 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN bun run build
 
 # Cleanup: Remove dev dependencies and cache to reduce image size
-# Ne pas supprimer les fichiers source car Next.js peut en avoir besoin en runtime
-RUN cd /app && bun install --production --frozen-lockfile && \
+# Do not delete the source files because Next.js may need them at runtime
+RUN cd /app && bun install --production && \
     rm -rf /app/node_modules/.cache && \
     rm -rf /app/apps/frontend/.next/cache
 

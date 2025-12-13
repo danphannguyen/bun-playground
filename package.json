@@ -3,8 +3,7 @@
   "type": "module",
   "private": true,
   "workspaces": [
-    "apps/*",
-    "packages/*"
+    "apps/*"
   ],
   "scripts": {
     "dev": "bun run --filter '*' dev",
@@ -18,12 +17,13 @@
     "start:frontend": "bun run --filter frontend start",
     "lint": "bun run --filter '*' lint",
     "test": "bun run --filter '*' test",
-    "clean": "rm -rf apps/backend/dist apps/frontend/.next apps/backend/node_modules apps/frontend/node_modules packages/shared/node_modules node_modules",
-    "clean:build": "rm -rf apps/backend/dist apps/frontend/.next",
-    "clean:deps": "rm -rf apps/backend/node_modules apps/frontend/node_modules packages/shared/node_modules node_modules"
+    "clean": "rimraf apps/backend/dist apps/frontend/.next apps/backend/node_modules apps/frontend/node_modules packages/shared/node_modules node_modules",
+    "clean:build": "rimraf apps/backend/dist apps/frontend/.next",
+    "clean:deps": "rimraf apps/backend/node_modules apps/frontend/node_modules packages/shared/node_modules node_modules"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "rimraf": "^6.1.2"
   },
   "peerDependencies": {
     "typescript": "^5"

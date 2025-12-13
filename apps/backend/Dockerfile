@@ -10,7 +10,7 @@ COPY ./apps/backend/package.json ./apps/backend/
 COPY ./apps/frontend/package.json ./apps/frontend/
 
 # Install all dependencies
-RUN bun install --frozen-lockfile
+RUN bun install
 
 # Stage 2: Builder
 FROM --platform=$BUILDPLATFORM oven/bun:1 AS builder
@@ -43,4 +43,4 @@ RUN bun install --production
 
 # Run
 EXPOSE 3001
-CMD ["bun", "./dist/src/main.js"]
+CMD ["bun", "./dist/main.js"]
