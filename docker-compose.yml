@@ -11,7 +11,6 @@ services:
       - "3001:3001"
     volumes:
       - ./apps/backend:/app/apps/backend:rw
-      - ./packages/shared:/app/packages/shared:ro
       - /app/apps/backend/node_modules
       - /app/apps/backend/dist
     environment:
@@ -39,7 +38,6 @@ services:
       - "3000:3000"
     volumes:
       - ./apps/frontend:/app/apps/frontend:rw
-      - ./packages/shared:/app/packages/shared:ro
       - /app/apps/frontend/node_modules
       - /app/apps/frontend/.next
     environment:

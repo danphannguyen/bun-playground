@@ -7,14 +7,12 @@ COPY ./package.json ./bun.lock ./
 COPY ./tsconfig.json ./
 COPY ./apps/frontend/package.json ./apps/frontend/
 COPY ./apps/backend/package.json ./apps/backend/
-# COPY ./packages/shared/package.json ./packages/shared/
 
 # Install all dependencies
 RUN bun install --frozen-lockfile
 
 # Copy source
 COPY ./apps/frontend ./apps/frontend
-# COPY ./packages/shared ./packages/shared
 
 # Build Next.js
 WORKDIR /app/apps/frontend

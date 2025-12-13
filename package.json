@@ -18,7 +18,9 @@
     "start:frontend": "bun run --filter frontend start",
     "lint": "bun run --filter '*' lint",
     "test": "bun run --filter '*' test",
-    "clean": "rm -rf apps/*/dist apps/*/.next apps/*/node_modules packages/*/node_modules node_modules"
+    "clean": "rm -rf apps/backend/dist apps/frontend/.next apps/backend/node_modules apps/frontend/node_modules packages/shared/node_modules node_modules",
+    "clean:build": "rm -rf apps/backend/dist apps/frontend/.next",
+    "clean:deps": "rm -rf apps/backend/node_modules apps/frontend/node_modules packages/shared/node_modules node_modules"
   },
   "devDependencies": {
     "@types/bun": "latest"

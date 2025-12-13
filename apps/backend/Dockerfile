@@ -23,7 +23,6 @@ COPY --from=deps /app/tsconfig.json ./tsconfig.json
 
 # Copy source
 COPY ./apps/backend ./apps/backend
-# COPY ./packages/shared ./packages/shared
 
 # Build NestJS
 WORKDIR /app/apps/backend
