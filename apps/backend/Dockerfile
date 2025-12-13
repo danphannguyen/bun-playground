@@ -8,7 +8,6 @@ COPY ./package.json ./bun.lock ./
 COPY ./tsconfig.json ./
 COPY ./apps/backend/package.json ./apps/backend/
 COPY ./apps/frontend/package.json ./apps/frontend/
-# COPY ./packages/shared/package.json ./packages/shared/
 
 # Install all dependencies
 RUN bun install --frozen-lockfile
@@ -45,4 +44,4 @@ RUN bun install --production
 
 # Run
 EXPOSE 3001
-CMD ["bun", "./dist/main.js"]
+CMD ["bun", "./dist/src/main.js"]
